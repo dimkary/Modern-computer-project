@@ -18,72 +18,32 @@ CHIP Mux4Way16 {
     PARTS:
     // Put your code here:
 	// Getting inner pins for sel flips
-	Not(in=sel[0], out=nselZero);
-	Not(in=sel[1], out=nselOne);
+	Not(in=sel[1], out=nselZero);
+	Not(in=sel[0], out=nselOne);
 	
+	to16(in=nselZero, out=nselzero);
+	to16(in=nselOne, out=nselone);
+	to16(in=sel[1], out=selzero);
+	to16(in=sel[0], out=selone);
+
 	// a gate
-	And16(a[0..15]= nselZero, b[0..15]=nselOne, out=flagA);
+	And16(a=nselzero, b=nselone, out=flagA);
 	
 	And16(a=flagA, b=a, out=finalA);
 	
 	// b gate
-	And(a=nselZero, b=sel[1], out=flagB[0]);
-	And(a=nselZero, b=sel[1], out=flagB[1]);
-	And(a=nselZero, b=sel[1], out=flagB[2]);
-	And(a=nselZero, b=sel[1], out=flagB[3]);
-	And(a=nselZero, b=sel[1], out=flagB[4]);
-	And(a=nselZero, b=sel[1], out=flagB[5]);
-	And(a=nselZero, b=sel[1], out=flagB[6]);
-	And(a=nselZero, b=sel[1], out=flagB[7]);
-	And(a=nselZero, b=sel[1], out=flagB[8]);
-	And(a=nselZero, b=sel[1], out=flagB[9]);
-	And(a=nselZero, b=sel[1], out=flagB[10]);
-	And(a=nselZero, b=sel[1], out=flagB[11]);
-	And(a=nselZero, b=sel[1], out=flagB[12]);
-	And(a=nselZero, b=sel[1], out=flagB[13]);
-	And(a=nselZero, b=sel[1], out=flagB[14]);
-	And(a=nselZero, b=sel[1], out=flagB[15]);
+	And16(a=nselzero, b=selone, out=flagB);
 	
 	And16(a=flagB, b=b, out=finalB);	
 	
 	// c gate
-	And(a=sel[0], b=nselOne, out=flagC[0]);
-	And(a=sel[0], b=nselOne, out=flagC[1]);
-	And(a=sel[0], b=nselOne, out=flagC[2]);
-	And(a=sel[0], b=nselOne, out=flagC[3]);
-	And(a=sel[0], b=nselOne, out=flagC[4]);
-	And(a=sel[0], b=nselOne, out=flagC[5]);
-	And(a=sel[0], b=nselOne, out=flagC[6]);
-	And(a=sel[0], b=nselOne, out=flagC[7]);
-	And(a=sel[0], b=nselOne, out=flagC[8]);
-	And(a=sel[0], b=nselOne, out=flagC[9]);
-	And(a=sel[0], b=nselOne, out=flagC[10]);
-	And(a=sel[0], b=nselOne, out=flagC[11]);
-	And(a=sel[0], b=nselOne, out=flagC[12]);
-	And(a=sel[0], b=nselOne, out=flagC[13]);
-	And(a=sel[0], b=nselOne, out=flagC[14]);
-	And(a=sel[0], b=nselOne, out=flagC[15]);
+	And16(a=selzero, b=nselone, out=flagC);
 	
 	And16(a=flagC, b=c, out=finalC);
 	
 	
 	// d gate
-	And(a=sel[0], b=sel[1], out=flagD[0]);
-	And(a=sel[0], b=sel[1], out=flagD[1]);
-	And(a=sel[0], b=sel[1], out=flagD[2]);
-	And(a=sel[0], b=sel[1], out=flagD[3]);
-	And(a=sel[0], b=sel[1], out=flagD[4]);
-	And(a=sel[0], b=sel[1], out=flagD[5]);
-	And(a=sel[0], b=sel[1], out=flagD[6]);
-	And(a=sel[0], b=sel[1], out=flagD[7]);
-	And(a=sel[0], b=sel[1], out=flagD[8]);
-	And(a=sel[0], b=sel[1], out=flagD[9]);
-	And(a=sel[0], b=sel[1], out=flagD[10]);
-	And(a=sel[0], b=sel[1], out=flagD[11]);
-	And(a=sel[0], b=sel[1], out=flagD[12]);
-	And(a=sel[0], b=sel[1], out=flagD[13]);
-	And(a=sel[0], b=sel[1], out=flagD[14]);
-	And(a=sel[0], b=sel[1], out=flagD[15]);
+	And16(a=selzero, b=selone, out=flagD);
 
 	And16(a=flagD, b=d, out=finalD);
 	
@@ -92,4 +52,3 @@ CHIP Mux4Way16 {
 	Or16(a=aToC, b=finalD, out=out);
 	
 }
-	

@@ -19,4 +19,66 @@ CHIP Mux8Way16 {
 
     PARTS:
     // Put your code here:
+	// flip selections
+	Not(in=sel[2], out=nselZero);
+	Not(in=sel[1], out=nselOne);
+	Not(in=sel[0], out=nselTwo);
+	
+	// 16bit selection arrays
+	to16(in=nselZero, out=nselzero);
+	to16(in=nselOne, out=nselone);
+	to16(in=nselTwo, out=nseltwo);
+	to16(in=sel[2], out=selzero);
+	to16(in=sel[1], out=selone);
+	to16(in=sel[0], out=seltwo);
+	
+	// a gate
+	And16(a=nselzero, b=nselone, out=tempA);
+	And16(a=tempA, b=nseltwo, out=flagA);
+	And16(a=flagA, b=a, out=finalA);
+
+	// b gate
+	And16(a=nselzero, b=nselone, out=tempB);
+	And16(a=tempB, b=seltwo, out=flagB);
+	And16(a=flagB, b=b, out=finalB);	
+	
+	// c gate
+	And16(a=nselzero, b=selone, out=tempC);
+	And16(a=tempC, b=nseltwo, out=flagC);
+	And16(a=flagC, b=c, out=finalC);		
+	
+	// d gate
+	And16(a=nselzero, b=selone, out=tempD);
+	And16(a=tempD, b=seltwo, out=flagD);
+	And16(a=flagD, b=d, out=finalD);	
+	
+	// e gate
+	And16(a=selzero, b=nselone, out=tempE);
+	And16(a=tempE, b=nseltwo, out=flagE);
+	And16(a=flagE, b=e, out=finalE);
+	
+	// f gate
+	And16(a=selzero, b=nselone, out=tempF);
+	And16(a=tempF, b=seltwo, out=flagF);
+	And16(a=flagF, b=f, out=finalF);
+	
+	// g gate
+	And16(a=selzero, b=selone, out=tempG);
+	And16(a=tempG, b=nseltwo, out=flagG);
+	And16(a=flagG, b=g, out=finalG);
+	
+	// h gate
+	And16(a=selzero, b=selone, out=tempH);
+	And16(a=tempH, b=seltwo, out=flagH);
+	And16(a=flagH, b=h, out=finalH);
+	
+	// Output calculation
+	Or16(a=finalA, b=finalB, out=aAndB);
+	Or16(a=aAndB, b=finalC, out=aToC);
+	Or16(a=aToC, b=finalD, out=aToD);
+	Or16(a=aToD, b=finalE, out=aToE);
+	Or16(a=aToE, b=finalF, out=aToF);
+	Or16(a=aToF, b=finalG, out=aToG);
+	Or16(a=aToG, b=finalH, out=out);
+	
 }

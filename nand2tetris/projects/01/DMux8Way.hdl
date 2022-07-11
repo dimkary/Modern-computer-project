@@ -17,4 +17,53 @@ CHIP DMux8Way {
 
     PARTS:
     // Put your code here:
+	// Flip select inputs
+	And(a=sel[2],b=sel[2], out=s0);
+	And(a=sel[1],b=sel[1], out=s1);
+	And(a=sel[0],b=sel[0], out=s2);
+	Not(in=sel[2], out=notS0);
+	Not(in=sel[1], out=notS1);
+	Not(in=sel[0], out=notS2);
+	
+	// a gate
+	And(a=in, b=notS0, out=tempA);
+	And(a=tempA, b=notS1, out=flagA);
+	And(a=flagA, b=notS2, out=a);
+	
+	// b gate
+	And(a=in, b=notS0, out=tempB);
+	And(a=tempB, b=notS1, out=flagB);
+	And(a=flagB, b=s2, out=b);
+	
+	// c gate
+	And(a=in, b=notS0, out=tempC);
+	And(a=tempC, b=s1, out=flagC);
+	And(a=flagC, b=notS2, out=c);
+	
+	// d gate
+	And(a=in, b=notS0, out=tempD);
+	And(a=tempD, b=s1, out=flagD);
+	And(a=flagD, b=s2, out=d);	
+	
+	// e gate
+	And(a=in, b=s0, out=tempE);
+	And(a=tempE, b=notS1, out=flagE);
+	And(a=flagE, b=notS2, out=e);		
+	
+	
+	// f gate
+	And(a=in, b=s0, out=tempF);
+	And(a=tempF, b=notS1, out=flagF);
+	And(a=flagF, b=s2, out=f);	
+	
+	// g gate
+	And(a=in, b=s0, out=tempG);
+	And(a=tempG, b=s1, out=flagG);
+	And(a=flagG, b=notS2, out=g);	
+	
+	// h gate
+	And(a=in, b=s0, out=tempH);
+	And(a=tempH, b=s1, out=flagH);
+	And(a=flagH, b=s2, out=h);		
+
 }

@@ -17,4 +17,25 @@ CHIP DMux4Way {
 
     PARTS:
     // Put your code here:
+	// Save flipped selects
+	Not(in=sel[1], out=notS0);
+	Not(in=sel[0], out=notS1);
+	And(a=sel[1], b=sel[1], out=s0);
+	And(a=sel[0], b=sel[0], out=s1);
+	
+	// out a
+	And(a=in,b=notS0,out=tempA);
+	And(a=tempA, b=notS1, out=a);
+	
+	// out b
+	And(a=in,b=notS0,out=tempB);
+	And(a=tempB, b=s1, out=b);
+	
+	// out c
+	And(a=in,b=s0,out=tempC);
+	And(a=tempC, b=notS1, out=c);
+	
+	// out d
+	And(a=in,b=s0,out=tempD);
+	And(a=tempD, b=s1, out=d);
 }

@@ -43,4 +43,73 @@ CHIP ALU {
 
     PARTS:
    // Put you code here:
+   // bus all signals
+   to16(in=zx, out=bzx);
+   to16(in=nx, out=bnx);
+   to16(in=zy, out=bzy);
+   to16(in=ny, out=bny);
+   to16(in=no, out=bno);
+   
+   // zx implementation
+   Not16(in=bzx, out=nobzx);
+   And16(a=x, b=nobzx, out=xzx);
+   
+   // nx implementation
+   Xor16(a=xzx, b=bnx, out=xnx);
+   
+   // zy implementation
+   Not16(in=bzy, out=nobzy);
+   And16(a=y, b=nobzy, out=yzy);
+   
+   // ny implementation
+   Xor16(a=yzy, b=bny, out=yny);
+
+   // f implementation
+   Add16(a=xnx, b=yny, out=xPlusy);
+   And16(a=xnx, b=yny, out=xAndy);
+   Mux16(a=xAndy, b=xPlusy, sel=f, out=xy);
+   
+   // no
+   Not16(in=xy, out=notxy);
+   Mux16(a=xy, b=notxy, sel=no, out=tempout);
+   And16(a=tempout,b=tempout,out=out);
+   
+   // ng, zr implementation
+   And16(a=tempout, b=tempout,
+	   out[0]=zr0,
+	   out[1]=zr1,
+	   out[2]=zr2,
+	   out[3]=zr3,
+	   out[4]=zr4,
+	   out[5]=zr5,
+	   out[6]=zr6,
+	   out[7]=zr7,
+	   out[8]=zr8,
+	   out[9]=zr9,
+	   out[10]=zr10,
+	   out[11]=zr11,
+	   out[12]=zr12,
+	   out[13]=zr13,
+	   out[14]=zr14,
+	   out[15]=zr15,
+	   out[15]=ng
+	   );
+	  
+	// zr ANDs
+	Or(a=zr0, b=zr1, out=zzr0);
+	Or(a=zzr0, b=zr2, out=zzr1);
+	Or(a=zzr1, b=zr3, out=zzr2);
+	Or(a=zzr2, b=zr4, out=zzr3);
+	Or(a=zzr3, b=zr5, out=zzr4);
+	Or(a=zzr4, b=zr6, out=zzr5);
+	Or(a=zzr5, b=zr7, out=zzr6);
+	Or(a=zzr6, b=zr8, out=zzr7);
+	Or(a=zzr7, b=zr9, out=zzr8);
+	Or(a=zzr8, b=zr10, out=zzr9);
+	Or(a=zzr9, b=zr11, out=zzr10);
+	Or(a=zzr10, b=zr12, out=zzr11);
+	Or(a=zzr11, b=zr13, out=zzr12);
+	Or(a=zzr12, b=zr14, out=zzr13);
+	Or(a=zzr13, b=zr15, out=zzr14);
+	Not(in=zzr14, out=zr);
 }

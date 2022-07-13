@@ -17,4 +17,27 @@ CHIP PC {
 
     PARTS:
     // Put your code here:
+
+	// Store empty 16-bit array
+	Not16(in=true, out=empty);
+
+	// Store incremented current state
+	Inc16(in=PC, out=incremented);
+	
+	// Select using combos of all controls
+	Mux8Way16(
+		a=PC,
+		b=empty,
+		c=incremented,
+		d=empty,
+		e=in,
+		f=empty,
+		g=in,
+		h=empty,
+		sel[0]=reset,
+		sel[1]=inc,
+		sel[2]=load,
+		out= stageOut);
+		
+	Register(in=stageOut, load=true, out=PC, out=out);
 }

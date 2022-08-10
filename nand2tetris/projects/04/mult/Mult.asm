@@ -10,3 +10,40 @@
 // R0 >= 0, R1 >= 0, and R0*R1 < 32768.
 
 // Put your code here.
+
+// initialize R2 to 0
+@R2
+M = 0
+
+// initialize 'i' to iterate
+@i
+M = 0
+
+// we will implement a * b by adding a to itself b times
+
+(LOOP)
+	// if (i==b) goto END
+	@i
+	D = M
+
+	@R1
+	D = M - D
+	@END
+	D;JEQ
+
+	// Add 'a' to R2
+	@R0
+	D = M
+
+	@R2
+	M = M + D
+	
+	@i
+	M = M + 1
+	
+	@LOOP
+	0;JMP
+		
+(END)
+	@END
+	0;JMP
